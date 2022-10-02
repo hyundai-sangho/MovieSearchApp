@@ -27,28 +27,29 @@ function findMovies() {
 function displayMovieList(movies) {
   searchList.innerHTML = ''
 
-  for (let idx = 0; idx < movies.length; idx++) {
+  for (const element of movies) {
     let movieListItem = document.createElement('div')
-    movieListItem.dataset.id = movies[idx].imdbID
+    let moviePoster
+    movieListItem.dataset.id = element.imdbID
     movieListItem.classList.add('search-list-item')
 
-    if (movies[idx].Post !== 'N/A') {
-      moviePoster = movies[idx].Poster
+    if (element.Poster !== 'N/A') {
+      moviePoster = element.Poster
+
+      // console.log('moviePoster: ' + moviePoster)
     } else {
       moviePoster = 'image_not_found.png'
     }
 
-    if (moviePoster !== 'N/A') {
-      movieListItem.innerHTML = `
+    movieListItem.innerHTML = `
     <div class="search-item-thumbnail">
       <img src="${moviePoster}">
     </div>
     <div class="search-item-info">
-      <h3>${movies[idx].Title}</h3>
-      <p>${movies[idx].Year}</p>
+      <h3>${element.Title}</h3>
+      <p>${element.Year}</p>
     </div>
     `
-    }
 
     searchList.appendChild(movieListItem)
   }
@@ -73,7 +74,7 @@ function loadMovieDetails() {
 function displayMovieDetails(details) {
   resultGrid.innerHTML = `
   <div class="movie-poster">
-    <img src="${details.Poste !== 'N/A' ? details.Poster : 'image_not_found.png'}" alt="영화 포스터" />
+    <img src="${details.Poster !== 'N/A' ? details.Poster : 'image_not_found.png'}" alt="영화 포스터" />
   </div>
   <div class="movie-info">
     <h3 class="movie-title">${details.Title}</h3>
